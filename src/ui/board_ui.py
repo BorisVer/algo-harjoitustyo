@@ -2,12 +2,14 @@ import pygame
 from game_config import GameConfig
 from game.top_score import TopScore
 
+
 class BoardUI:
     """
     Shows the visual representation of the game loop
 
     Draws the game board, tiles, animations, current score and top score
     """
+
     def __init__(self, board, screen, config):
         """
         Initializes the BoardUI class
@@ -70,8 +72,10 @@ class BoardUI:
                 # Code for animation, written with help of AI
                 dt_move = now - tile.move_start
                 t_move = min(1, dt_move / self.animation_time)
-                row_pos = tile.previous_row + (tile.row - tile.previous_row) * t_move
-                col_pos = tile.previous_col + (tile.col - tile.previous_col) * t_move
+                row_pos = tile.previous_row + \
+                    (tile.row - tile.previous_row) * t_move
+                col_pos = tile.previous_col + \
+                    (tile.col - tile.previous_col) * t_move
 
                 px = col_pos * (self.tile_size + self.spacing) + self.spacing
                 py = row_pos * (self.tile_size + self.spacing) + self.spacing
@@ -92,24 +96,26 @@ class BoardUI:
                     border_radius=4
                 )
 
-                text_surf = font.render(str(tile.value), True, self.config.TEXT_COLOR)
+                text_surf = font.render(
+                    str(tile.value), True, self.config.TEXT_COLOR)
                 text_rect = text_surf.get_rect(center=rect.center)
                 self.screen.blit(text_surf, text_rect)
 
-        score_txt = font.render(f"Score: {self.board.score}", True, (255, 255, 255))
+        score_txt = font.render(
+            f"Score: {self.board.score}", True, (255, 255, 255))
         score_rect = score_txt.get_rect(midbottom=(
             self.screen.get_width() // 2,
             self.screen.get_height() - 60
         ))
         self.screen.blit(score_txt, score_rect)
 
-        top_txt = font.render(f"Top Score: {self.current_top_score}", True, (255, 255, 255))
+        top_txt = font.render(
+            f"Top Score: {self.current_top_score}", True, (255, 255, 255))
         top_rect = top_txt.get_rect(midbottom=(
             self.screen.get_width() // 2,
             self.screen.get_height() - 10
         ))
         self.screen.blit(top_txt, top_rect)
-
 
     def check_top_score(self):
         """

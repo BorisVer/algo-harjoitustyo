@@ -2,6 +2,7 @@ import random
 import pygame
 from game_config import GameConfig
 
+
 class Tile:
     """
     Represents a tile in the game grid.
@@ -15,6 +16,7 @@ class Tile:
         spawn_time: The time when the tile was spawned (needed purely for animation)
         move_start: The time when the tile started moving (needed purely for animation)
     """
+
     def __init__(self, value, row, col):
         self.value = value
         self.row = row
@@ -26,6 +28,8 @@ class Tile:
         self.move_start = now
 
 # --------------------------------------
+
+
 class GameLogic:
     """
     Manages game rules and states:
@@ -174,7 +178,8 @@ class GameLogic:
         """
         moved = False
         for c in range(self.tile_count):
-            col_tiles = [self.grid[r][c] for r in range(self.tile_count) if self.grid[r][c]]
+            col_tiles = [self.grid[r][c]
+                         for r in range(self.tile_count) if self.grid[r][c]]
             i = 0
             while i < len(col_tiles) - 1:
                 if col_tiles[i].value == col_tiles[i+1].value:
@@ -200,7 +205,8 @@ class GameLogic:
         """
         moved = False
         for c in range(self.tile_count):
-            col_tiles = [self.grid[r][c] for r in range(self.tile_count) if self.grid[r][c]]
+            col_tiles = [self.grid[r][c]
+                         for r in range(self.tile_count) if self.grid[r][c]]
             i = len(col_tiles) - 1
             while i > 0:
                 if col_tiles[i].value == col_tiles[i-1].value:
@@ -230,7 +236,7 @@ class GameLogic:
             for c in range(self.tile_count):
                 if self.grid[r][c] is None:
                     return False
-                for dr, dc in ((1,0),(0,1)):
+                for dr, dc in ((1, 0), (0, 1)):
                     nr, nc = r+dr, c+dc
                     if nr < self.tile_count and nc < self.tile_count:
                         t1 = self.grid[r][c]

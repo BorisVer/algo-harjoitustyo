@@ -21,7 +21,7 @@ class GameConfig:
     SPACING = 15
     BG_COLOR = (187, 173, 160)
     EMPTY_TILE_COLOR = (205, 193, 180)
-    TEXT_COLOR       = (0,   0,   0)
+    TEXT_COLOR = (0,   0,   0)
     TILE_COLORS = {
         # Generoitu koodi alkaa (deepseek)
         0: (205, 193, 180),

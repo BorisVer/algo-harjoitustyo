@@ -10,6 +10,7 @@ from game.top_score import TopScore
 from game_config import GameConfig
 from ui.board_ui import BoardUI
 
+
 def draw_text(text, font, color, surface, pos):
     """
     Render given text at the given position
@@ -22,8 +23,9 @@ def draw_text(text, font, color, surface, pos):
         pos: The x and y cordinates of the text
     """
     textobj = font.render(text, True, color)
-    textrect = textobj.get_rect(center=(pos[0],pos[1]))
+    textrect = textobj.get_rect(center=(pos[0], pos[1]))
     surface.blit(textobj, textrect)
+
 
 def button(data):
     """
@@ -43,12 +45,14 @@ def button(data):
     Return:
         bool: True if button is clicked, else False
             """
-    color = data["hover_color"] if data["rect"].collidepoint(data["mouse"]) else data["base_color"]
+    color = data["hover_color"] if data["rect"].collidepoint(
+        data["mouse"]) else data["base_color"]
     pygame.draw.rect(data["screen"], color, data["rect"], border_radius=10)
     pos = (data["rect"].centerx, data["rect"].centery)
     draw_text(data["text"], data["font"], data["text_color"],
-       data["screen"], pos)
+              data["screen"], pos)
     return data["rect"].collidepoint(data["mouse"]) and data["click"]
+
 
 def start_menu():
     """
@@ -67,8 +71,10 @@ def start_menu():
     title_font = pygame.font.SysFont("arial", 72)
     button_font = pygame.font.SysFont("arial", 36)
 
-    start_button = pygame.Rect(config.WIDTH // 2 - 100, config.HEIGHT // 2, 200, 60)
-    quit_button = pygame.Rect(config.WIDTH // 2 -100, config.HEIGHT // 2 + 80, 200, 60)
+    start_button = pygame.Rect(
+        config.WIDTH // 2 - 100, config.HEIGHT // 2, 200, 60)
+    quit_button = pygame.Rect(config.WIDTH // 2 - 100,
+                              config.HEIGHT // 2 + 80, 200, 60)
 
     clock = pygame.time.Clock()
 
@@ -85,29 +91,29 @@ def start_menu():
         screen.fill(config.BG_COLOR)
 
         pos = (config.WIDTH // 2, config.HEIGHT // 3)
-        draw_text("2048", title_font, (119,110,101), screen, pos)
+        draw_text("2048", title_font, (119, 110, 101), screen, pos)
 
         start_button_data = {"rect": start_button,
-            "text": "Start Game",
-            "font": button_font,
-            "screen": screen,
-            "mouse": mouse_pos,
-            "click": click,
-            "base_color": (119, 110, 101),
-            "hover_color": (150, 140, 130),
-            "text_color": (255, 255, 255)
-        }
+                             "text": "Start Game",
+                             "font": button_font,
+                             "screen": screen,
+                             "mouse": mouse_pos,
+                             "click": click,
+                             "base_color": (119, 110, 101),
+                             "hover_color": (150, 140, 130),
+                             "text_color": (255, 255, 255)
+                             }
 
         quit_button_data = {"rect": quit_button,
-            "text": "Quit",
-            "font": button_font,
-            "screen": screen,
-            "mouse": mouse_pos,
-            "click": click,
-            "base_color": (119, 110, 101),
-            "hover_color": (150, 140, 130),
-            "text_color": (255, 255, 255)
-        }
+                            "text": "Quit",
+                            "font": button_font,
+                            "screen": screen,
+                            "mouse": mouse_pos,
+                            "click": click,
+                            "base_color": (119, 110, 101),
+                            "hover_color": (150, 140, 130),
+                            "text_color": (255, 255, 255)
+                            }
 
         if button(start_button_data):
             main()
@@ -119,6 +125,7 @@ def start_menu():
 
         pygame.display.flip()
         clock.tick(60)
+
 
 def lose_screen():
     """
@@ -133,8 +140,10 @@ def lose_screen():
     lose_font = pygame.font.SysFont("arial", 70)
     button_font = pygame.font.SysFont("arial", 30)
 
-    restart_button = pygame.Rect(config.WIDTH // 2 - 100, config.HEIGHT // 2 + 50, 200, 50)
-    quit_button = pygame.Rect(config.WIDTH // 2 - 100, config.HEIGHT // 2 - 30, 200, 50)
+    restart_button = pygame.Rect(
+        config.WIDTH // 2 - 100, config.HEIGHT // 2 + 50, 200, 50)
+    quit_button = pygame.Rect(config.WIDTH // 2 - 100,
+                              config.HEIGHT // 2 - 30, 200, 50)
     clock = pygame.time.Clock()
 
     board_snapshot = screen.copy()
@@ -162,26 +171,26 @@ def lose_screen():
         draw_text("Game Over", lose_font, (255, 255, 255), screen, pos)
 
         restart_button_data = {"rect": restart_button,
-            "text": "Restart",
-            "font": button_font,
-            "screen": screen,
-            "mouse": mouse_pos,
-            "click": click,
-            "base_color": (119, 110, 101),
-            "hover_color": (150, 140, 130),
-            "text_color": (255, 255, 255)
-        }
+                               "text": "Restart",
+                               "font": button_font,
+                               "screen": screen,
+                               "mouse": mouse_pos,
+                               "click": click,
+                               "base_color": (119, 110, 101),
+                               "hover_color": (150, 140, 130),
+                               "text_color": (255, 255, 255)
+                               }
 
         quit_button_data = {"rect": quit_button,
-            "text": "Quit",
-            "font": button_font,
-            "screen": screen,
-            "mouse": mouse_pos,
-            "click": click,
-            "base_color": (119, 110, 101),
-            "hover_color": (150, 140, 130),
-            "text_color": (255, 255, 255)
-        }
+                            "text": "Quit",
+                            "font": button_font,
+                            "screen": screen,
+                            "mouse": mouse_pos,
+                            "click": click,
+                            "base_color": (119, 110, 101),
+                            "hover_color": (150, 140, 130),
+                            "text_color": (255, 255, 255)
+                            }
 
         if button(restart_button_data):
             main()
@@ -191,6 +200,7 @@ def lose_screen():
 
         pygame.display.flip()
         clock.tick(60)
+
 
 def main():
     """

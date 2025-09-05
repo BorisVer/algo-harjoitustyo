@@ -1,11 +1,9 @@
+import unittest
+from game_config import GameConfig
+from game.game_logic import GameLogic, Tile
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from game.game_logic import GameLogic, Tile
-from game_config import GameConfig
-import unittest
-
 
 
 class TestScoreLogic(unittest.TestCase):
@@ -17,8 +15,8 @@ class TestScoreLogic(unittest.TestCase):
         for row in range(self.config.TILE_COUNT):
             for col in range(self.config.TILE_COUNT):
                 value = start[row][col]
-                self.game.grid[row][col] = Tile(value, row, col) if value else None
-
+                self.game.grid[row][col] = Tile(
+                    value, row, col) if value else None
 
     def test_score_zero_at_start(self):
         self.assertEqual(self.game.score, 0)

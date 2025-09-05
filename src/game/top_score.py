@@ -1,5 +1,6 @@
 import os
 
+
 class TopScore:
     """
     Manages the top score of the game in a file
@@ -7,6 +8,7 @@ class TopScore:
     Updates the file if score is broken, gets current highscore
     and creates the required directory and file if they dont exist yet
     """
+
     def __init__(self):
         """
         Initializes the pathes to the directory and file"""

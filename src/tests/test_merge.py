@@ -1,13 +1,11 @@
+import unittest
+from game_config import GameConfig
+from game.game_logic import GameLogic, Tile
 import sys
 import os
 
 from src.index import start_menu
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from game.game_logic import GameLogic, Tile
-from game_config import GameConfig
-import unittest
-
 
 
 class TestMergeLogic(unittest.TestCase):
@@ -19,8 +17,8 @@ class TestMergeLogic(unittest.TestCase):
         for row in range(self.config.TILE_COUNT):
             for col in range(self.config.TILE_COUNT):
                 value = start[row][col]
-                self.game.grid[row][col] = Tile(value, row, col) if value else None
-
+                self.game.grid[row][col] = Tile(
+                    value, row, col) if value else None
 
     def test_merge_logic_left(self):
         start = [
@@ -58,7 +56,6 @@ class TestMergeLogic(unittest.TestCase):
         self._set_grid(start)
         self.game.move("up")
 
-
         self.assertEqual(self.game.grid[0][1].value, 4)
 
     def test_merge_logic_down(self):
@@ -86,4 +83,17 @@ class TestMergeLogic(unittest.TestCase):
         self.game.move("right")
 
         self.assertEqual([self.game.grid[0][2].value,
-            self.game.grid[0][3].value], [4, 4])
+                          self.game.grid[0][3].value], [4, 4])
+
+    def test_wrong_double_merge(self):
+        start = [
+            [0, 2, 2, 4],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ]
+
+        self._set_grid(start)
+        self.game.move("right")
+        self.assertEqual([self.game.grid[0][2].value,
+                         self.game.grid[0][3].value], [4, 4])
