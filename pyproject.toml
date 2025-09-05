@@ -1,0 +1,24 @@
+[project]
+name = "ot-harjoitustyo"
+version = "0.1.0"
+description = ""
+authors = [{ name = "BorisVer", email = "borisversonnen@gmail.com" }]
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.9.0,<3.11"
+pygame = "^2.6.0"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^6.5.0"
+pytest = "^7.2.0"
+invoke = "^2.2.0"
+pylint = "^3.3.6"
+autopep8 = "^2.3.2"
+pygame = "^2.6.1"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
