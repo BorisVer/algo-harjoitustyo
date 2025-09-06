@@ -9,6 +9,7 @@ from game.game_logic import GameLogic
 from game.top_score import TopScore
 from game_config import GameConfig
 from ui.board_ui import BoardUI
+from expectimax import Expectimax
 
 
 def draw_text(text, font, color, surface, pos):
@@ -216,6 +217,7 @@ def main():
     board = GameLogic()
     ui = BoardUI(board, screen, config)
     clock = pygame.time.Clock()
+    test_bot = Expectimax()
 
     running = True
     while running:
@@ -228,14 +230,10 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                if event.key == pygame.K_LEFT:
-                    board.move("left")
-                if event.key == pygame.K_RIGHT:
-                    board.move("right")
-                if event.key == pygame.K_UP:
-                    board.move("up")
-                if event.key == pygame.K_DOWN:
-                    board.move("down")
+                if event.key == pygame.K_a:
+                    current_board = board.return_board()
+                    move = test_bot.get_best_move(current_board)
+                    board.move(move)
 
         screen.fill(config.BG_COLOR)
         ui.draw()

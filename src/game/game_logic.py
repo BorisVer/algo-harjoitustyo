@@ -64,6 +64,24 @@ class GameLogic:
         self.spawn_tile()
         self.spawn_tile()
 
+    def return_board(self):
+        """
+        Conver the grid into a 2D list
+
+        Returns:
+            list: 4x4 grid where 0 = empty cell and numbers = tile value
+        """
+        board = []
+        for r in range(self.tile_count):
+            row = []
+            for c in range(self.tile_count):
+                if self.grid[r][c] is None:
+                    row.append(0)
+                else:
+                    row.append(self.grid[r][c].value)
+            board.append(row)
+        return board
+
     def spawn_tile(self):
         """
         Spawns a new tile at a random empty position

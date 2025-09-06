@@ -15,6 +15,7 @@ class GameConfig:
         ANIMATION_DURATION: Duration of animations in milliseconds
     """
     TILE_COUNT = 4
+    MAX_DEPTH = 2
     WIDTH = 400
     HEIGHT = 500
     TILE_SIZE = 80
