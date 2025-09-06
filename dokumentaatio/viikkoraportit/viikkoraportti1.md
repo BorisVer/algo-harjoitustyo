@@ -12,7 +12,7 @@ Tällä hetkellä ohjelma toimii käynnistämällä, painamalla start nappia ja 
 
 | Päivä | Käytetty aika | Kuvaus |
 |-------|------------|------------|
-| 4.8   |     2h      | Aiheen pohdinta, projektin luonti           |
-| 5.8   |     3h      | Aiheen hyväskyntä ja pohjan teko |
-| 6.8   |     4h      | Pohjan muokkas käytettävään muotoon, algoritmin alun kirjoitus |
+| 4.9   |     2h      | Aiheen pohdinta, projektin luonti           |
+| 5.9|     3h      | Aiheen hyväskyntä ja pohjan teko |
+| 6.9   |     4h      | Pohjan muokkas käytettävään muotoon, algoritmin alun kirjoitus |
 | Yhteensä   |     9h      |  |
