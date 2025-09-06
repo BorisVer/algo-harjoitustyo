@@ -6,7 +6,7 @@ Tämä on 2048 Pelille algoritmi
 - ...
 
 ## Viikkoraportti
-- [Viikko 1](https://github.com/BorisVer/algo-harjoitustyo/dokumentaatio/viikkoraportit/viikkoraportti1.md)
+- [Viikko 1](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti1.md)
 
 ## Asennus
 1. Asenna riippuvuudet
