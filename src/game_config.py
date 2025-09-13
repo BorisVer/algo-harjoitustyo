@@ -15,7 +15,6 @@ class GameConfig:
         ANIMATION_DURATION: Duration of animations in milliseconds
     """
     TILE_COUNT = 4
-    MAX_DEPTH = 2
     WIDTH = 400
     HEIGHT = 500
     TILE_SIZE = 80
@@ -45,3 +44,14 @@ class GameConfig:
         # Generoitu koodi loppuu
     }
     ANIMATION_DURATION = 100
+
+
+class ExpectimaxConfig:
+    MAX_DEPTH = 4
+    MAX_TILE = 0
+    EMPTY_TILE = 14.0
+    CORNER_BONUS = 2.0
+    MONOTONICITY_BONUS = 4.0
+    ADJACENT_BONUS = 0.1
+    SNAKE_BONUS = 3.0
+    CENTER_PENALTY = 1

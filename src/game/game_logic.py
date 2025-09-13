@@ -55,6 +55,8 @@ class GameLogic:
         self.tile_count = GameConfig.TILE_COUNT
         self.score = 0
         self.game_over = False
+        self.total_score = 0
+        self.total_attempts = 0
 
         self.grid = [[None] * self.tile_count for _ in range(self.tile_count)]
         self.last_spawned_tile = None
@@ -134,6 +136,7 @@ class GameLogic:
         if method():
             self.spawn_tile()
         if self._is_game_over():
+            print(self.score)
             self.game_over = True
 
     def _move_left(self):

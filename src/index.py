@@ -219,9 +219,12 @@ def main():
     clock = pygame.time.Clock()
     test_bot = Expectimax()
 
+    move_counter = 0
+
     running = True
     while running:
         if board.game_over:
+            print(board.return_board())
             ui.check_top_score()
             lose_screen()
         for event in pygame.event.get():
@@ -230,10 +233,13 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                if event.key == pygame.K_a:
-                    current_board = board.return_board()
-                    move = test_bot.get_best_move(current_board)
-                    board.move(move)
+
+        move_counter += 1
+        if move_counter >= 10 and not board.game_over:
+            current_board = board.return_board()
+            move = test_bot.get_best_move(current_board)
+            board.move(move)
+            move_counter = 0  # Reset counter
 
         screen.fill(config.BG_COLOR)
         ui.draw()
