@@ -3,10 +3,12 @@
 Tämä on 2048 Pelille algoritmi
 
 ## Dokumentaatio
-- ...
+- [Määrittelydokumentti](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/maarittelydokumentti.md)
 
 ## Viikkoraportti
 - [Viikko 1](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti1.md)
+- [Viikko 2](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti2.md)
+- [Viikko 3](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti3.md)
 
 ## Asennus
 1. Asenna riippuvuudet
