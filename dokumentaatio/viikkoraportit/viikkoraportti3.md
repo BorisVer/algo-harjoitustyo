@@ -6,6 +6,8 @@ Koodin lisäämisen lisäksi kirjoitin kommentit jokaiseen fuktioon siitä mitä
 
 Opiskelin viikkoa varten miten välimuisti kannattaa toteuttaa ja sen kanssa oli alunperin aika paljon vaikeuksia. Myös logaritmisten laskujen kirjoittaminen heurestiselle funktiolle oli aika hankalaa ja vaati tutkimusta aiheesta. Ongelmia oli taas import vikojen kanssa, pylint valittaa import ongelmista jotka nyt kommentoin pois. Samoin unittest aiheutti vaikeuksia importtien kanssa ja jouduin muokkaamaan tasks.py tiedoston kutsua. 
 
+Seuraavalle viikolle vielä viimestelen pylint korjauksia, tutkin saanko ohjelman nopeutettua jotenkin ja aloitan uuden algortimitn eli minmax algoritmin tekemisen todennäköisesti. Samalla muutama unittesti lisää jotta kattavuus olisi 100%.
+
 ## Tuntikirjanpito
 
 | Päivä | Käytetty aika | Kuvaus |
