@@ -1,6 +1,6 @@
 # 2048-Pelin algoritmi
 
-Tämä on 2048 Pelille algoritmi
+Tämä on 2048 Pelille expectimax algoritmi
 
 ## Dokumentaatio
 - [Määrittelydokumentti](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/maarittelydokumentti.md)

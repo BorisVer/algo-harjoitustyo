@@ -6,12 +6,14 @@ Koodin lisäämisen lisäksi kirjoitin kommentit jokaiseen fuktioon siitä mitä
 
 Opiskelin viikkoa varten miten välimuisti kannattaa toteuttaa ja sen kanssa oli alunperin aika paljon vaikeuksia. Myös logaritmisten laskujen kirjoittaminen heurestiselle funktiolle oli aika hankalaa ja vaati tutkimusta aiheesta. Ongelmia oli taas import vikojen kanssa, pylint valittaa import ongelmista jotka nyt kommentoin pois. Samoin unittest aiheutti vaikeuksia importtien kanssa ja jouduin muokkaamaan tasks.py tiedoston kutsua. 
 
+Seuraavalle viikolle vielä viimestelen pylint korjauksia, tutkin saanko ohjelman nopeutettua jotenkin ja aloitan uuden algortimitn eli minmax algoritmin tekemisen todennäköisesti. Samalla muutama unittesti lisää jotta kattavuus olisi 100%.
+
 ## Tuntikirjanpito
 
 | Päivä | Käytetty aika | Kuvaus |
 |-------|------------|------------|
-| 9.9   |     1.5h      | Algoritmin alkeiversion luonti|
-| 11.9  |     3h      | Algoritmin testaus ja päivittäminen |
-| 12.9   |     5h      | Ongelmien etsimistä ja niiden korjaamista, kaikki tuntui hajoavan |
-| 13.9   |     6h      | Algoritmill ehtojen lisäämistä, testaamista ja kertoimien muokkausta |
-| Yhteensä   |     15.5h      |  |
+| 15.9   |     2h      | Arviontikriteerien lisäys|
+| 16.9  |     2.5h      | Arviontikriteerien muokkaus log2|
+| 19.9   |     4h      | Välimuisti, kommentoimista, pylint korjailua |
+| 20.9   |     5h      | Unittestit, koodin siistimistä, testiraportti|
+| Yhteensä   |     13.5h      |  |
