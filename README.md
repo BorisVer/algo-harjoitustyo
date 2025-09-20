@@ -4,6 +4,7 @@ Tämä on 2048 Pelille algoritmi
 
 ## Dokumentaatio
 - [Määrittelydokumentti](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/maarittelydokumentti.md)
+- [Testausdokumentti](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/testausraportti.md)
 
 ## Viikkoraportti
 - [Viikko 1](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti1.md)
