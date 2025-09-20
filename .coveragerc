@@ -1,0 +1,5 @@
+[run]
+omit =
+    *index.py
+    */__init__.py
+    */ui/board_ui.py

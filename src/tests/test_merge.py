@@ -4,7 +4,6 @@ from game.game_logic import GameLogic, Tile
 import sys
 import os
 
-from src.index import start_menu
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 

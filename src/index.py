@@ -5,11 +5,11 @@ import sys
 
 import pygame
 
-from game.game_logic import GameLogic
-from game.top_score import TopScore
-from game_config import GameConfig
-from ui.board_ui import BoardUI
-from expectimax import Expectimax
+from game.game_logic import GameLogic # pylint: disable=import-error
+from game.top_score import TopScore # pylint: disable=import-error
+from game_config import GameConfig # pylint: disable=import-error
+from ui.board_ui import BoardUI # pylint: disable=import-error
+from expectimax import Expectimax # pylint: disable=import-error
 
 
 def draw_text(text, font, color, surface, pos):
@@ -224,7 +224,6 @@ def main():
     running = True
     while running:
         if board.game_over:
-            print(board.return_board())
             ui.check_top_score()
             lose_screen()
         for event in pygame.event.get():
@@ -233,8 +232,8 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-
-        move_counter += 1
+        if move_counter < 10:
+            move_counter += 1
         if move_counter >= 10 and not board.game_over:
             current_board = board.return_board()
             move = test_bot.get_best_move(current_board)

@@ -1,165 +1,232 @@
-from game_config import GameConfig, ExpectimaxConfig
+from game_config import GameConfig, ExpectimaxConfig  # pylint: disable=import-error
+
 
 class Expectimax:
-    def __init__(self):
+    """
+    The code for the Expectimax algorithm
+
+    Attributes:
+        max_depth (int): Maximum depth of the search tree
+        tile_count (int): Number of rows and columns
+        max_cache (dict): Cache for the max() function, holds the game state as a tuple of tuples and then its value
+        chance_cache (dict): Cache for chance function, holds the game state as a tuple of tuples and then its value
+        eval_cache (dict): Cache for evaluation values, holds the game state as a tuple of tuples and then its value
+    """
+
+    def __init__(self): # pylint: disable=too-many-instance-attributes
+        """
+        Initialize the data for the algorithm
+
+        Attributes:
+            max_depth (int): Maximum depth of the search tree
+            tile_count (int): Number of rows and columns
+            max_cache (dict): Cache for the max() function, holds the game state as a tuple of tuples and then its value
+            chance_cache (dict): Cache for chance function, holds the game state as a tuple of tuples and then its value
+            eval_cache (dict): Cache for evaluation values, holds the game state as a tuple of tuples and then its value
+        """
         self.max_depth = ExpectimaxConfig.MAX_DEPTH
         self.tile_count = GameConfig.TILE_COUNT
+        self.max_cache = {}
+        self.chance_cache = {}
+        self.eval_cache = {}
+
+        self.snake_0_0 = [
+            (0, 0), (0, 1), (0, 2), (0, 3),
+            (1, 3), (1, 2), (1, 1), (1, 0),
+            (2, 0), (2, 1), (2, 2), (2, 3),
+            (3, 3), (3, 2), (3, 1), (3, 0)
+        ]
+        self.snake_0_3 = [(row, self.tile_count - 1 - column) for row, column in self.snake_0_0]
+        self.snake_3_0 = [(self.tile_count - 1 - row, column) for row, column in self.snake_0_0]
+        self.snake_3_3 = [(self.tile_count - 1 - row, self.tile_count - 1 - column) for row, column in self.snake_0_0]
 
     def get_best_move(self, board):
-        # Called from outside, return "left" "right" "up" "down"
-        best_score, best_move = self.max(board, 0)
+        """
+        Called from the index.py, handles the running and returning of the best move. At start clears all caches
 
-        self.evaluate_with_print(board)
+        Returns:
+            The best move to make based on the current board state as a string "left", "right", "up", "down"
+        """
+        self.max_cache.clear()
+        self.chance_cache.clear()
+        self.eval_cache.clear()
 
-        return best_move
+        _, move = self.max(board, 0)
 
-    def evaluate_with_print(self, board):
-        empty_counter = 0
-        tiles = []
-        for row in board:
-            for cell in row:
-                tiles.append(cell)
-                if cell == 0:
-                    empty_counter += 1
-        empty_ratio = empty_counter / (self.tile_count ** 2)
+        return move
 
-        corner = 1.0 if self.get_corner_bonus(board) else 0.0
+    def evaluate(self, board): # pylint: disable=too-many-locals
+        """
+        Evaluates the current board state and returns a score based on the board's state.
+        Turns the board into a log2 for evaluation so that the size of the tiles does not affect
 
-        snake = self.get_snake_bonus(board)
+        Returns:
+            The score of the board state as a float
+        """
 
-        adjacent = self.get_adjacent_bonus(board)
+        board_key = tuple(tuple(row) for row in board)
+        if board_key in self.eval_cache:
+            return self.eval_cache[board_key]
 
-        big_center = self.check_big_center(board)
+        log_board = [[tile.bit_length() - 1 if tile > 0 else 0 for tile in row]
+                     for row in board]
 
-        w_empty = ExpectimaxConfig.EMPTY_TILE
-        w_corner = ExpectimaxConfig.CORNER_BONUS
-        w_adjacent = ExpectimaxConfig.ADJACENT_BONUS
-        w_snake = ExpectimaxConfig.SNAKE_BONUS
-        w_center = ExpectimaxConfig.CENTER_PENALTY
-
-        print("Current board:")
-        print(board[0])
-        print(board[1])
-        print(board[2])
-        print(board[3])
-        print("Points from empty tiles:", empty_ratio * w_empty)
-        print("Points from corner tiles:", corner * w_corner)
-        print("Points from adjacent tiles:", adjacent * w_adjacent)
-        print("Points from snake tiles:", snake * w_snake)
-        print("Penalty from big center:", big_center * w_center)
-
-        total_score = (
-                    empty_ratio * w_empty +
-                    corner * w_corner +
-                    adjacent * w_adjacent +
-                    snake * w_snake +
-                    big_center * w_center
-                )
-
-        print("Total score:", total_score)
-
-        return total_score, None
-
-    def evaluate(self, board):
-        empty_counter = 0
-        tiles = []
-        for row in board:
-            for cell in row:
-                tiles.append(cell)
-                if cell == 0:
-                    empty_counter += 1
-        empty_ratio = empty_counter / (self.tile_count ** 2)
-
-        corner = 1.0 if self.get_corner_bonus(board) else 0.0
-
-        snake = self.get_snake_bonus(board)
-
-        adjacent = self.get_adjacent_bonus(board)
-
-        big_center = self.check_big_center(board)
-
-        w_empty = ExpectimaxConfig.EMPTY_TILE
-        w_corner = ExpectimaxConfig.CORNER_BONUS
-        w_adjacent = ExpectimaxConfig.ADJACENT_BONUS
-        w_snake = ExpectimaxConfig.SNAKE_BONUS
-        w_center = ExpectimaxConfig.CENTER_PENALTY
-
-        total_score = (
-                    empty_ratio * w_empty +
-                    corner * w_corner +
-                    adjacent * w_adjacent +
-                    snake * w_snake +
-                    big_center * w_center
-                )
-
-        return total_score, None
-
-    def get_corner_bonus(self, board):
         largest = max(max(row) for row in board)
-        corners = [board[0][0]] #[board[0][0], board[0][-1], board[-1][0], board[-1][-1]]
-        for corner in corners:
-            if corner == largest and largest > 0:
-                return True
+
+        empty_ratio = self.get_empty_ratio(board)
+        corner = 1.0 if self.get_corner_bonus(board, largest) else 0.0
+        snake = self.get_snake_bonus(board, log_board, largest)
+        smoothness, merges = self.smoothness_and_merge(board, log_board)
+
+        w_smoothness = ExpectimaxConfig.SMOOTHNESS_BONUS
+        w_empty = ExpectimaxConfig.EMPTY_TILE
+        w_corner = ExpectimaxConfig.CORNER_BONUS
+        w_snake = ExpectimaxConfig.SNAKE_BONUS
+        w_merge = ExpectimaxConfig.MERGE_BONUS
+
+        total_score = (
+            empty_ratio * w_empty +
+            corner * w_corner +
+            merges * w_merge +
+            snake * w_snake +
+            smoothness * w_smoothness
+        )
+
+
+        self.eval_cache[board_key] = (total_score, None)
+
+        return total_score, None
+
+    def get_empty_ratio(self, board):
+        """
+        Calculate the ratio of empty tiles to filled ones, to get bonus for empty tiles
+
+        Returns:
+            The ratio of empty tiles to filled ones as float
+        """
+        empty_counter = 0
+        for row in board:
+            for cell in row:
+                if cell == 0:
+                    empty_counter += 1
+        return empty_counter / (self.tile_count) ** 2
+
+    def get_corner_bonus(self, board, largest):
+        """Check if the larges tile is in a corner
+
+        Returns:
+            A bool, True if the largest tile is in a corner, False otherwise
+        """
+        corners = [board[0][0], board[0][-1], board[-1][0], board[-1][-1]]
+        if largest in corners and largest > 0:
+            return True
         return False
 
-    def get_snake_bonus(self, board):
-        total_sum = sum(sum(row) for row in board)
-        score = board[0][0]
-        earlier = board[0][0]
-        order = [(0, 1), (0, 2), (0, 3), (1, 3), (1, 2), (1, 1), (1, 0), (2, 0), (2, 1), (2, 2), (2, 3), (3, 3), (3, 2), (3, 1), (3, 0)]
-        for r, c in order:
-            if board[r][c] <= earlier and board[r][c] != 0:
-                score += board[r][c]
-                earlier = board[r][c]
-            else:
-                return score / total_sum
+    def smoothness_and_merge(self, board, log_board):
+        """
+        Calculate the smoothness of the board. This means it checks neighboring tiles
+        and counts their difference, the smaller the better. Also count same tiles
+        next to each other, divide it by the maximum to get a usefull number, larger numbers = better
 
-        return score / total_sum
+        raw smoothness / pairs
 
-    def get_adjacent_bonus(self, board):
-        score = 0.0
+        Returns:
+            The smoothness score of the board as a float, inverted value since negative is good in this case
+            The ratio of potential merges to the maximum possible merges as a float
+        """
         n = self.tile_count
-        larges = max(max(row) for row in board)
+        difference = 0.0
+        pairs = 0
+        potentials = 0
+        for row in range(n):
+            for column in range(n):
+                # Smoothness logic
+                if column + 1 < n:
+                    difference += abs(log_board[row][column] - log_board[row][column + 1])
+                    pairs += 1
+                if row + 1 < n:
+                    difference += abs(log_board[row][column] - log_board[row + 1][column])
+                    pairs += 1
 
-        for r in range(n - 1):
-            for c in range(n - 1):
-                value = board[r][c]
+                # Merge logit
+                value = board[row][column]
                 if value == 0:
                     continue
+                if row + 1 < n and board[row + 1][column] == value:
+                    potentials += value.bit_length() - 1  # To get the log2
+                if column + 1 < n and board[row][column + 1] == value:
+                    potentials += value.bit_length() - 1  # To get the log2
 
-                if board[r + 1][c] == value and r + 1 < n:
-                    if board[r + 1][c] == larges:
-                        score += 2
-                    score += 1
-                elif board[r + 1][c] == value / 2 or board[r + 1][c] == value * 2:
-                    if board[r + 1][c] == larges:
-                        score += 1.5
-                    score += 0.75
+        if pairs == 0:
+            return 0.0, potentials / 2 * n * (n - 1)
 
-                if board[r][c + 1] == value and c + 1 < n:
-                    if board[r][c + 1] == larges:
-                        score += 2
-                    score += 1
+        return - (difference/pairs), potentials / (2 * n * (n - 1))
 
-                elif board[r][c + 1] == value / 2 or board[r][c + 1] == value * 2:
-                    if board[r][c + 1] == larges:
-                        score += 1.5
-                    score +=  0.75
+    def get_snake_bonus(self, board, log_board, largest):
+        """
+        Check if the board has a snake like structure of decreasing numbers
+        leaving from the corner where the largest is
+        If largest in top left then something like this:
 
-        return score
+        | 2048 | 1024 | 512  | 256  |
+        |  64  |  8   | 32   | 128  |
+        |  0   |  0   |  4   |  0   |
+        |  2   |  2   |  8   |  0   |
 
-    def check_big_center(self, board):
-        check = [(1,1), (1,2), (2,1), (2,2)]
-        largest = max(max(row) for row in board)
-        counter = 0
-        for r, c in check:
-            if board[r][c] == largest or board[r][c] == largest / 2:
-                counter -= 1
-        return counter
+        Row 1: Here the bonus would be for this row +4
+        Row 2: Here the bonus goes till the tile with value 8
+        Row 3: No bonus here any more
+        Row 4: No bonus here any more
+
+        Return:
+            The snake bonus as a float
+        """
+        n = self.tile_count
+        corners = [(0, 0), (0, n-1), (n-1, 0), (n-1, n-1)]
+        largest_pos = None
+        for row, column in corners:
+            if largest == board[row][column]:
+                largest_pos = (row, column)
+        if largest_pos is None:
+            return 0
+
+        snake = getattr(self, f"snake_{largest_pos[0]}_{largest_pos[1]}")
+
+        total = sum(sum(row) for row in log_board)
+        score = log_board[snake[0][0]][snake[0][1]]
+        earlier = score
+
+        for row, column in snake[1:]:
+            value = log_board[row][column]
+            if value <= earlier and value != 0:
+                score += value
+                earlier = value
+            else:
+                return score / total if total > 0 else 0.0
+
+        return score / total if total > 0 else 0.0
 
     def max(self, board, current_depth):
+        """
+        The main loop part. This checks each possible move for each step, "left", "right", "up", "down". If the move
+        changes the board it is sent to the chance() function. Also checks if the max_depth is reached, and check if
+        the current board state already exists in the cache for quicker processing
+
+        Returns:
+            Tuple (best score, best move), where best score is a float and best move string
+        """
+        # Making a cache so the program does not need to count the same thing every time
+        board_key = tuple(tuple(row) for row in board)
+        cache_key = (board_key, current_depth)
+
+        if cache_key in self.max_cache:
+            return self.max_cache[cache_key]
+
         if current_depth >= self.max_depth:
-            return self.evaluate(board)
+            # Stores the result in the cache so it can be accessed easily
+            result = self.evaluate(board)
+            self.max_cache[cache_key] = result
+            return result
 
         best_score = float('-inf')
         best_move = None
@@ -186,53 +253,85 @@ class Expectimax:
         if best_move is None:
             return self.evaluate(board)
 
-        return best_score, best_move
+        result = (best_score, best_move)
+        self.max_cache[cache_key] = result
+        return result
 
     def chance(self, board, current_depth):
+        """
+        For each board given to this function from the max() it tests all possible spawn points for new
+        tiles and gives it the values 2 and 4 and sends it for evaluation. Also checks if the board was already
+        in the cache for speedup. The then calculates the expected value for each possible spawn point with
+        the chance for 2 and 4 calculated into it. Based on this the algoritm can then know what move has the best
+        chance to give the best results
+
+        Returns:
+            Tuple (avarage expected, None) where the average expected is calculated value
+        """
+        board_key = tuple(tuple(row) for row in board)
+        cache_key = (board_key, current_depth)
+
+        if cache_key in self.chance_cache:
+            return self.chance_cache[cache_key]
+
         empty_cells = []
 
-        for r in range(len(board)):
-            for c in range(len(board[0])):
-                if board[r][c] == 0:
-                    empty_cells.append((r, c))
+        for row in range(len(board)):
+            for column in range(len(board[0])):
+                if board[row][column] == 0:
+                    empty_cells.append((row, column))
 
         if not empty_cells:
-            return self.evaluate(board)
+            result = self.evaluate(board)
+            self.chance_cache[cache_key] = result
+            return result
 
-        total_expected_score = 0
+        total_expected = 0
 
-        for r, c in empty_cells:
-            new_board_2 = [row[:] for row in board]
-            new_board_2[r][c] = 2
-            score_2, _ = self.max(new_board_2, current_depth + 1)
+        for row, column in empty_cells:
 
-            new_board_4 = [row[:] for row in board]
-            new_board_4[r][c] = 4
-            score_4, _ = self.max(new_board_4, current_depth + 1)
+            board[row][column] = 2
+            score2, _ = self.max(board, current_depth)
 
-            expected_score = 0.9 * score_2 + 0.1 * score_4
-            total_expected_score += expected_score
+            board[row][column] = 4
+            score4, _ = self.max(board, current_depth)
 
-        average_expected_score = total_expected_score / len(empty_cells)
+            board[row][column] = 0
 
-        return average_expected_score , None
+            total_expected += 0.9 * score2 + 0.1 * score4
+
+        avg_expected = total_expected / len(empty_cells)
+        result = (avg_expected, None)
+        self.chance_cache[cache_key] = result
+        return result
 
     def make_move(self, board, move):
-        # Implement the logic to simulate a move on the board
+        """
+        Simulates a move on the board and returns the new board state.
+
+        Return:
+            New board as a list
+        """
         if move == "left":
             new_board = self.move_left(board)
             return new_board
-        elif move == "right":
+        if move == "right":
             new_board = self.move_right(board)
             return new_board
-        elif move == "up":
+        if move == "up":
             new_board = self.move_up(board)
             return new_board
-        elif move == "down":
+        if move == "down":
             new_board = self.move_down(board)
             return new_board
 
     def move_left(self, board):
+        """
+        Simulates a left move on the board and returns the new board state.
+
+        Return:
+            New board as a list
+        """
         new_board = []
         for row in board:
             tiles = [v for v in row if v != 0]
@@ -253,6 +352,12 @@ class Expectimax:
         return new_board
 
     def move_right(self, board):
+        """
+        Simulates a right move on the board and returns the new board state.
+
+        Return:
+            New board as a list
+        """
         new_board = []
         for row in board:
             tiles = [v for v in row if v != 0]
@@ -273,45 +378,57 @@ class Expectimax:
         return new_board
 
     def move_up(self, board):
+        """
+        Simulates an up move on the board and returns the new board state.
+
+        Return:
+            New board as a list
+        """
         n = self.tile_count
         new_board = [[0] * n for _ in range(n)]
 
-        for c in range(n):
-            column = [board[r][c] for r in range(n) if board[r][c] != 0]
+        for column in range(n):
+            entie_column = [board[row][column] for row in range(n) if board[row][column] != 0]
 
             i = 0
-            while i < len(column) - 1:
-                if column[i] == column[i + 1]:
-                    column[i] *= 2
-                    column[i + 1] = 0
+            while i < len(entie_column) - 1:
+                if entie_column[i] == entie_column[i + 1]:
+                    entie_column[i] *= 2
+                    entie_column[i + 1] = 0
                     i += 2
                 else:
                     i += 1
 
-            new_tiles = [v for v in column if v != 0]
-            for r, v in enumerate(new_tiles):
-                new_board[r][c] = v
+            new_tiles = [value for value in entie_column if value != 0]
+            for row, value in enumerate(new_tiles):
+                new_board[row][column] = value
 
         return new_board
 
     def move_down(self, board):
+        """
+        Simulates a down move on the board and returns the new board state.
+
+        Return:
+            New board as a list
+        """
         n = self.tile_count
         new_board = [[0] * n for _ in range(n)]
 
-        for c in range(n):
-            column = [board[r][c] for r in range(n) if board[r][c] != 0]
+        for column in range(n):
+            entire_column = [board[row][column] for row in range(n) if board[row][column] != 0]
 
-            i = len(column) - 1
+            i = len(entire_column) - 1
             while i > 0:
-                if column[i] == column[i - 1]:
-                    column[i] *= 2
-                    column[i - 1] = 0
+                if entire_column[i] == entire_column[i - 1]:
+                    entire_column[i] *= 2
+                    entire_column[i - 1] = 0
                     i -= 2
                 else:
                     i -= 1
 
-            new_tiles = [v for v in column if v != 0]
-            for i, v in enumerate(new_tiles):
-                new_board[n - len(new_tiles) + i][c] = v
+            new_tiles = [value for value in entire_column if value != 0]
+            for row, value in enumerate(new_tiles):
+                new_board[n - len(new_tiles) + row][column] = value
 
         return new_board

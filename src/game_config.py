@@ -47,11 +47,20 @@ class GameConfig:
 
 
 class ExpectimaxConfig:
+    """
+    All adjustable data for the Expectimax algorithm
+
+    Args:
+        MAX_DEPTH: Maximum depth of the search tree
+        EMPTY_TILE: Value of the ratio of empty tiles to used tiles
+        CORNER_BONUS: Bonus for largest tile in the corner
+        SNAKE_BONUS: Bonus for each tile in a snake-like pattern
+        SMOOTHNESS_BONUS: Bonus for smoothness of the board
+        MERGE_BONUS: Bonus for potential merges
+    """
     MAX_DEPTH = 4
-    MAX_TILE = 0
-    EMPTY_TILE = 14.0
-    CORNER_BONUS = 2.0
-    MONOTONICITY_BONUS = 4.0
-    ADJACENT_BONUS = 0.1
-    SNAKE_BONUS = 3.0
-    CENTER_PENALTY = 1
+    EMPTY_TILE = 16.0
+    CORNER_BONUS = 3.0
+    SNAKE_BONUS = 4.0
+    SMOOTHNESS_BONUS = 5.0
+    MERGE_BONUS = 5.5
