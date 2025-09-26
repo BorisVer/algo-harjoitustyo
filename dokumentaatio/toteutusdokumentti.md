@@ -1,0 +1,7 @@
+# Toteutusdokumentti
+
+## 2048 Peli
+Ohjelma on rakennettu 2048 nimisen pelin ympärille. Peli koostuu 4x4 ruudukosta, johon satunnaisesti syntyy ruutuja. Pelaaja voi vuorollaan siirtää kaikki ruudut haluamaansa suuntaa (vasemmalle, oikealle, ylös tai alas). Tällöin saman arvoiset ruudut yhdistyvät osutessaan toisiinsa ja muodostavat uuden ruudun, jonka arvo on kaksinkertainen alkuperäisestä ruudusta. Pelaajan siirron jälkeen peli luo yhden uuden ruudun satunnaiseen tyhjään ruutuun. Uuden ruudun arvo on 90% todennäköisyydellä 2 ja 10% todennäköisytydellä 4. Kunten pelin nimestä voi arvata pelin tavoite on saavuttaa ruutu jonka arvo on 2048. Pelissä on myös pistesysteemi. Yhdistämällä laatat, pelaaja saa laattojen kokonaisumman verran pisteitä. Esim yhdistämällä kaksi 32 arvoista laattaa pelaaja saa 64 pistettä. Peli loppuu kun ruudukko on täynnä, ja mikään pelaajan tekemä siirto ei vapauta enään tilaa uudelle ruudulle. 
+
+## Ohjelman yleisrakenne
+2048-expectimax algortimin tavoite on pelata 2048 peliä mahdollisimman hyvin. Ohjelma simuloi kaikki pelaajan mahdolliset 4 suuntavalintaa. Sen jälkeen jokaiselle suunnalle ohjelma testaa jokaisen tyhjän laatan kohdalle luoda uusi laatta ja arvioi millainen pelitilanne saataisiin aikaa. Ohjelma tekee näin 4 pelaajan siirron verran, jonka jälkeen se vertaa kaikki mahdollisia lopputuloksia (joita on noin 100,000-1,000,000 riippuen tyhjien laattojen määrästä) ja valitsee niistä sen millä on suurin "pisteytys" pelilaudan arvolle. 
