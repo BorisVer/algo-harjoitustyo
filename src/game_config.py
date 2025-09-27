@@ -58,7 +58,7 @@ class ExpectimaxConfig:
         SMOOTHNESS_BONUS: Bonus for smoothness of the board
         MERGE_BONUS: Bonus for potential merges
     """
-    MAX_DEPTH = 4
+    MAX_DEPTH = 3
     EMPTY_TILE = 16.0
     CORNER_BONUS = 3.0
     SNAKE_BONUS = 4.0

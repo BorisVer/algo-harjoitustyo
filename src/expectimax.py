@@ -126,7 +126,7 @@ class Expectimax:
         """
         Calculate the smoothness of the board. This means it checks neighboring tiles
         and counts their difference, the smaller the better. Also count same tiles
-        next to each other, divide it by the maximum to get a usefull number, larger numbers = better
+        next to each other, divide it by the maximum to get a useful number, larger numbers = better
 
         raw smoothness / pairs
 
@@ -148,7 +148,7 @@ class Expectimax:
                     difference += abs(log_board[row][column] - log_board[row + 1][column])
                     pairs += 1
 
-                # Merge logit
+                # Merge logic
                 value = board[row][column]
                 if value == 0:
                     continue
@@ -388,18 +388,18 @@ class Expectimax:
         new_board = [[0] * n for _ in range(n)]
 
         for column in range(n):
-            entie_column = [board[row][column] for row in range(n) if board[row][column] != 0]
+            entire_column = [board[row][column] for row in range(n) if board[row][column] != 0]
 
             i = 0
-            while i < len(entie_column) - 1:
-                if entie_column[i] == entie_column[i + 1]:
-                    entie_column[i] *= 2
-                    entie_column[i + 1] = 0
+            while i < len(entire_column) - 1:
+                if entire_column[i] == entire_column[i + 1]:
+                    entire_column[i] *= 2
+                    entire_column[i + 1] = 0
                     i += 2
                 else:
                     i += 1
 
-            new_tiles = [value for value in entie_column if value != 0]
+            new_tiles = [value for value in entire_column if value != 0]
             for row, value in enumerate(new_tiles):
                 new_board[row][column] = value
 

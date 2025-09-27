@@ -8,7 +8,7 @@ authors = [{ name = "BorisVer", email = "borisversonnen@gmail.com" }]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.9.0,<3.11"
+python = ">=3.9.0,<3.13"
 pygame = "^2.6.0"
 
 [tool.poetry.group.dev.dependencies]
