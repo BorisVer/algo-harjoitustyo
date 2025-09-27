@@ -9,4 +9,4 @@ Tällä viikolla en oikein mitään uutta oppinut, eikä mikään jäänyt epäs
 |-------|------------|------------|
 | 26.9   |     2h      | Koodin läpimeneminen ja tarkistus|
 | 27.9  |     3h      | Dokumentaatiota |
-| Yhteensä   |     13.5h      |  |
+| Yhteensä   |     5h      |  |
