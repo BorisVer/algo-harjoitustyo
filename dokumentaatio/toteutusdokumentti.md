@@ -7,7 +7,15 @@ Ohjelma on rakennettu 2048 nimisen pelin ympärille. Peli koostuu 4x4 ruudukosta
 2048-expectimax algortimin tavoite on pelata 2048 peliä mahdollisimman hyvin. Ohjelma simuloi kaikki pelaajan mahdolliset 4 suuntavalintaa. Sen jälkeen jokaiselle suunnalle ohjelma testaa jokaisen tyhjän laatan kohdalle luoda uusi laatta ja arvioi millainen pelitilanne saataisiin aikaa. Ohjelma tekee näin 4 pelaajan siirron verran, jonka jälkeen se vertaa kaikki mahdollisia lopputuloksia (joita on noin 100,000-1,000,000 riippuen tyhjien laattojen määrästä) ja valitsee niistä sen millä on suurin "pisteytys" pelilaudan arvolle. Pisteytys määrittyy useasta tekijästä. Tyhjien laattojen määrästä, onko isoin laatta kulmassa, onko laudalla samankokoiset laatat lähekkäin, mahdolliset yhdistykset seuraavalla siirrolla sekä "S" muotoinen rata isoimmasta laatasta pienimpään. Kaikki nämä tekijät antavat arvon pelilaudalle, ja jokaisen siirron kohdalle myös tulee todennäköisyyslasku laattojen eri arvomahdollisuudelle (2 tai 4) jota huomioiden ohjelma kykenee laskemaan mikä siirto tuo parhaan tuloksen suurimmalla todennäköisyydellä. Ohjelma suorittaa algoritmin valitseman siirron ja sen jälkeen algoritmi lähtee uudelleen pyörimään laskemaan seuraavaa siirtoa. 
 
 ## Aika ja tilavaativuudet
----
+...
 
 ## Puutteet ja parannusehdotukset
 Ohjelman pystyis nopeuttamaan arvioimalla tyhjien laattojen vaikutusarvon ja ohittamalla ne laattat joissa tulevalla laatalla olisi pieni vaikutus. Tämä nopeuttaisi ohjelmaa etenkin alkuvaiheessa. 
+
+## Laajojen kielimallinen käyttö
+Laajojen kielimalleja tuli käytettyä aivan alussa saamaan ideaa miten tälläistä projektia kannattaa lähestyä ja mistä olisi järkevintä aloittaa. Sen lisäksi sitä tuli käytettyä import ongelmien ratkaisemiseen kun importit eivät suostuneet toimimaa. Käytin Claude Sonnet 4 mallia (https://claude.ai/).
+
+## Lähteet
+- https://www.cs.columbia.edu/~sedwards/classes/2020/4995-fall/reports/Minimax.pdf
+- https://www.cs.uml.edu/ecg/uploads/AIfall14/vignesh_gayas_2048_project.pdf
+- https://en.wikipedia.org/wiki/Expectiminimax
