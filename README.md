@@ -33,6 +33,7 @@ Tämä on 2048 Pelille expectimax algoritmi
    ```bash
    poetry run invoke start
    ```
+Pelin avautuessa painamalla Start Game nappia ohjelma känynnistyy tai Quit ohjelma sulkeutuu. Pelin loppuessa tulee loppunäyttö jossa painamalla Restart alkaa ohjelma uudelleen, tai Quit ohjelma sulkeutuu. 
 
 ### Testien suoritus
    ```bash
