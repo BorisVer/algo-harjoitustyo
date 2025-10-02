@@ -1,6 +1,6 @@
 import random
 import pygame
-from game_config import GameConfig
+from game_config import GameConfig # pylint: disable=import-error
 
 
 class Tile:
@@ -68,7 +68,7 @@ class GameLogic:
 
     def return_board(self):
         """
-        Conver the grid into a 2D list
+        Convert the grid into a 2D list
 
         Returns:
             list: 4x4 grid where 0 = empty cell and numbers = tile value

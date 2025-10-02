@@ -64,3 +64,4 @@ class ExpectimaxConfig:
     SNAKE_BONUS = 4.0
     SMOOTHNESS_BONUS = 5.0
     MERGE_BONUS = 5.5
+    CHANGE_DEPTH = True

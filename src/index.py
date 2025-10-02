@@ -55,7 +55,7 @@ def button(data):
     return data["rect"].collidepoint(data["mouse"]) and data["click"]
 
 
-def start_menu():
+def start_menu(): # pylint: disable=too-many-statements
     """
     Display start menu, handels users input for starting game or quitting
 
@@ -128,7 +128,7 @@ def start_menu():
         clock.tick(60)
 
 
-def lose_screen():
+def lose_screen(): # pylint: disable=too-many-statements
     """
     Dispalys the "Game Over" screen with the current game in the background faded out
 
@@ -203,7 +203,7 @@ def lose_screen():
         clock.tick(60)
 
 
-def main():
+def main(): # pylint: disable=too-many-statements
     """
     Initializes and runs the loop of the game
 

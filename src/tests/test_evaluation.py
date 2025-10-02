@@ -12,6 +12,7 @@ class TestEvaluation(unittest.TestCase):
     @patch("src.expectimax.ExpectimaxConfig.SMOOTHNESS_BONUS", 5.0)
     @patch("src.expectimax.ExpectimaxConfig.SNAKE_BONUS", 4.0)
     @patch("src.expectimax.ExpectimaxConfig.MERGE_BONUS", 5.5)
+    @patch("src.expectimax.ExpectimaxConfig.CHANGE_DEPTH", True)
 
     def test_evaluation_for_simple_board(self):
         board = [[0, 0, 0, 0],
@@ -92,4 +93,4 @@ class TestEvaluation(unittest.TestCase):
             [0, 4, 0, 4]
         ]
         move = self.expectimax.get_best_move(board)
-        self.assertEqual(move, "left")
+        self.assertEqual(move, "right")

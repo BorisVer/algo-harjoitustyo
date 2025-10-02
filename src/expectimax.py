@@ -1,7 +1,7 @@
 from game_config import GameConfig, ExpectimaxConfig  # pylint: disable=import-error
 
 
-class Expectimax:
+class Expectimax: # pylint: disable=too-many-instance-attributes
     """
     The code for the Expectimax algorithm
 
@@ -47,9 +47,19 @@ class Expectimax:
         Returns:
             The best move to make based on the current board state as a string "left", "right", "up", "down"
         """
+        self.max_depth = ExpectimaxConfig.MAX_DEPTH
         self.max_cache.clear()
         self.chance_cache.clear()
         self.eval_cache.clear()
+
+        empty = sum(row.count(0) for row in board)
+        largest = max(max(row) for row in board)
+
+        if ExpectimaxConfig.CHANGE_DEPTH:
+            if empty <= 4 and largest >= 2048:
+                self.max_depth = self.max_depth + 1
+            elif empty >= 7:
+                self.max_depth = self.max_depth - 1
 
         _, move = self.max(board, 0)
 
@@ -206,6 +216,7 @@ class Expectimax:
 
         return score / total if total > 0 else 0.0
 
+
     def max(self, board, current_depth):
         """
         The main loop part. This checks each possible move for each step, "left", "right", "up", "down". If the move
@@ -274,15 +285,13 @@ class Expectimax:
         if cache_key in self.chance_cache:
             return self.chance_cache[cache_key]
 
-        empty_cells = []
-
-        for row in range(len(board)):
-            for column in range(len(board[0])):
-                if board[row][column] == 0:
-                    empty_cells.append((row, column))
+        empty_cells = [(i//4, i%4) for i in range(16) if board[i//4][i%4] == 0]
 
         if not empty_cells:
-            result = self.evaluate(board)
+            if self.max_depth == current_depth:
+                result = self.evaluate(board)
+            else:
+                result = 0
             self.chance_cache[cache_key] = result
             return result
 
