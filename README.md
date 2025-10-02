@@ -44,6 +44,10 @@ Tämä on 2048 Pelille expectimax algoritmi
    poetry run invoke lint
    ```
 
+### Coverage suoritus
+   ```bash
+   poetry run invoke coverage
+   ```
 
 ### Coverage raportin luonti
    ```bash
