@@ -7,7 +7,13 @@ Ohjelma on rakennettu 2048 nimisen pelin ympärille. Peli koostuu 4x4 ruudukosta
 2048-expectimax algortimin tavoite on pelata 2048 peliä mahdollisimman hyvin. Ohjelma simuloi kaikki pelaajan mahdolliset 4 suuntavalintaa. Sen jälkeen jokaiselle suunnalle ohjelma testaa jokaisen tyhjän laatan kohdalle luoda uusi laatta ja arvioi millainen pelitilanne saataisiin aikaa. Ohjelma tekee näin 4 pelaajan siirron verran, jonka jälkeen se vertaa kaikki mahdollisia lopputuloksia (joita on noin 100,000-1,000,000 riippuen tyhjien laattojen määrästä) ja valitsee niistä sen millä on suurin "pisteytys" pelilaudan arvolle. Pisteytys määrittyy useasta tekijästä. Tyhjien laattojen määrästä, onko isoin laatta kulmassa, onko laudalla samankokoiset laatat lähekkäin, mahdolliset yhdistykset seuraavalla siirrolla sekä "S" muotoinen rata isoimmasta laatasta pienimpään. Kaikki nämä tekijät antavat arvon pelilaudalle, ja jokaisen siirron kohdalle myös tulee todennäköisyyslasku laattojen eri arvomahdollisuudelle (2 tai 4) jota huomioiden ohjelma kykenee laskemaan mikä siirto tuo parhaan tuloksen suurimmalla todennäköisyydellä. Ohjelma suorittaa algoritmin valitseman siirron ja sen jälkeen algoritmi lähtee uudelleen pyörimään laskemaan seuraavaa siirtoa. 
 
 ## Aika ja tilavaativuudet
-...
+Yhden siirron laskeminen vie pahimmassa tapauksessa $O((m*(2E))^D)$ jossa,
+- $m$ = Mahdolliset siirrot solmussa $(m \leq 4)$
+- $E$ = Tyjät laatat $(0 \leq E \leq 15)$
+- $D$ = Syvyys - 1
+
+Jokaisen siirron laskemiseen jokaisessa syvyydessä jouduaan laskemaan siirrot kerrottuna tyhjillä ruuduilla mihin uusi laatta voi tulla. Nämä tyhjät ruudut on kerrottava kahdella kun mahdollisia laattoja on 2 ja 4. Koko kaava kasvaa potentiaalisesti syvyyden verran kun jokaiselle alkuperäiselle mahdollisuudelle lasketaan uudelleen kaikki mahdollisuudet. 
+
 
 ## Puutteet ja parannusehdotukset
 Ohjelman pystyis nopeuttamaan arvioimalla tyhjien laattojen vaikutusarvon ja ohittamalla ne laattat joissa tulevalla laatalla olisi pieni vaikutus. Tämä nopeuttaisi ohjelmaa etenkin alkuvaiheessa. 
