@@ -58,7 +58,7 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
         if ExpectimaxConfig.CHANGE_DEPTH:
             if empty <= 4 and largest >= 2048:
                 self.max_depth = self.max_depth + 1
-            elif empty >= 7:
+            elif empty >= 7 and largest < 2048:
                 self.max_depth = self.max_depth - 1
 
         _, move = self.max(board, 0)
