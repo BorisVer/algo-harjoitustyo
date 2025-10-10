@@ -1,5 +1,5 @@
 from game_config import GameConfig, ExpectimaxConfig  # pylint: disable=import-error
-
+import time
 
 class Expectimax: # pylint: disable=too-many-instance-attributes
     """
@@ -26,9 +26,7 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
         """
         self.max_depth = ExpectimaxConfig.MAX_DEPTH
         self.tile_count = GameConfig.TILE_COUNT
-        self.max_cache = {}
-        self.chance_cache = {}
-        self.eval_cache = {}
+        self.cache = {}
 
         self.snake_0_0 = [
             (0, 0), (0, 1), (0, 2), (0, 3),
@@ -48,12 +46,11 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
             The best move to make based on the current board state as a string "left", "right", "up", "down"
         """
         self.max_depth = ExpectimaxConfig.MAX_DEPTH
-        self.max_cache.clear()
-        self.chance_cache.clear()
-        self.eval_cache.clear()
 
         empty = sum(row.count(0) for row in board)
         largest = max(max(row) for row in board)
+
+        self.cache.clear()
 
         if ExpectimaxConfig.CHANGE_DEPTH:
             if empty <= 4 and largest >= 2048:
@@ -73,10 +70,6 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
         Returns:
             The score of the board state as a float
         """
-
-        board_key = tuple(tuple(row) for row in board)
-        if board_key in self.eval_cache:
-            return self.eval_cache[board_key]
 
         log_board = [[tile.bit_length() - 1 if tile > 0 else 0 for tile in row]
                      for row in board]
@@ -101,9 +94,6 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
             snake * w_snake +
             smoothness * w_smoothness
         )
-
-
-        self.eval_cache[board_key] = (total_score, None)
 
         return total_score, None
 
@@ -227,16 +217,16 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
             Tuple (best score, best move), where best score is a float and best move string
         """
         # Making a cache so the program does not need to count the same thing every time
-        board_key = tuple(tuple(row) for row in board)
-        cache_key = (board_key, current_depth)
+        board_key = tuple(val for row in board for val in row)
+        cache_key = (0, board_key, current_depth)
 
-        if cache_key in self.max_cache:
-            return self.max_cache[cache_key]
+        if cache_key in self.cache:
+            return self.cache[cache_key]
 
         if current_depth >= self.max_depth:
             # Stores the result in the cache so it can be accessed easily
             result = self.evaluate(board)
-            self.max_cache[cache_key] = result
+            self.cache[cache_key] = result
             return result
 
         best_score = float('-inf')
@@ -265,7 +255,7 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
             return self.evaluate(board)
 
         result = (best_score, best_move)
-        self.max_cache[cache_key] = result
+        self.cache[cache_key] = result
         return result
 
     def chance(self, board, current_depth):
@@ -279,20 +269,23 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
         Returns:
             Tuple (avarage expected, None) where the average expected is calculated value
         """
-        board_key = tuple(tuple(row) for row in board)
-        cache_key = (board_key, current_depth)
+        board_key = tuple(val for row in board for val in row)
+        cache_key = (1, board_key, current_depth)
 
-        if cache_key in self.chance_cache:
-            return self.chance_cache[cache_key]
+        if cache_key in self.cache:
+            return self.cache[cache_key]
 
-        empty_cells = [(i//4, i%4) for i in range(16) if board[i//4][i%4] == 0]
+        empty_cells = []
+        for i in range(16):
+            if board[i//4][i%4] == 0:
+                empty_cells.append((i//4, i%4))
 
         if not empty_cells:
             if self.max_depth == current_depth:
                 result = self.evaluate(board)
             else:
                 result = 0
-            self.chance_cache[cache_key] = result
+            self.cache[cache_key] = result
             return result
 
         total_expected = 0
@@ -311,7 +304,7 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
 
         avg_expected = total_expected / len(empty_cells)
         result = (avg_expected, None)
-        self.chance_cache[cache_key] = result
+        self.cache[cache_key] = result
         return result
 
     def make_move(self, board, move):
@@ -441,3 +434,25 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
                 new_board[n - len(new_tiles) + row][column] = value
 
         return new_board
+
+
+if __name__ == "__main__":
+    board = [
+        [0, 0, 8, 0],
+        [32, 16, 0, 0],
+        [6, 0, 2, 256],
+        [6, 256, 512, 0]
+    ]
+
+    e = Expectimax()
+
+    start = time.time()
+    count = 100
+    for i in range(count):
+        print(i)
+        e.get_best_move(board)
+    end = time.time()
+
+    runtime = end - start
+
+    print("The program ran a total of " + str(count) + " games with a total runtime of " + str(runtime) + "s meaning an average of " + str(runtime / 100) + "s per move")

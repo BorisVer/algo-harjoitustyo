@@ -55,13 +55,14 @@ class ExpectimaxConfig:
         EMPTY_TILE: Value of the ratio of empty tiles to used tiles
         CORNER_BONUS: Bonus for largest tile in the corner
         SNAKE_BONUS: Bonus for each tile in a snake-like pattern
-        SMOOTHNESS_BONUS: Bonus for smoothness of the board
+        SMOOTHNESS_BONUS: Bonus for smoothness of the board (similar value tiles are close to each other)
         MERGE_BONUS: Bonus for potential merges
+        CHANGE_DEPTH: Changing depth of the search tree based on the game state, thinks less in earlygame to speedup
     """
-    MAX_DEPTH = 3
+    MAX_DEPTH = 4
     EMPTY_TILE = 16.0
     CORNER_BONUS = 3.0
     SNAKE_BONUS = 4.0
     SMOOTHNESS_BONUS = 5.0
     MERGE_BONUS = 5.5
-    CHANGE_DEPTH = True
+    CHANGE_DEPTH = False
