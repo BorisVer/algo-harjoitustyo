@@ -38,7 +38,7 @@ Testissä ajettiin 100 peliä eri cache-toteutuksilla mittaamaan välimuistin va
 | Molemmat cachet erikseen | 501.0 s | 5.0 s | 87.9\% |
 | Yhdistetty cache | 489.3 s | 4.9 s | 88.1\% |
 
-Tuloksista näkee että välimuistin käyttö on kriittistä ohjelman suoritusnopeudelle. Yhden thtenäisen välimuistin ylläpitäminen osottautui nopeimmaksi. Yhteisen välimuistin tunnuksen alussa on 0 tai 1 merkitsemään onko se max vai chance solmu. Tämä on melkein 8.4 kertaa nopeampi kuin ilman välimuistia. Välimuistin hyöty myös kasvaa syvyyden kasvaessa, sillä osumien määrä nousee. 
+Tuloksista näkee että välimuistin käyttö on kriittistä ohjelman suoritusnopeudelle. Yhden thtenäisen välimuistin ylläpitäminen osottautui nopeimmaksi. Yhteisen välimuistin tunnuksen alussa on 0 tai 1 merkitsemään onko se max vai chance solmu. Tämä on melkein **8.4** kertaa nopeampi kuin ilman välimuistia. Välimuistin hyöty myös kasvaa syvyyden kasvaessa, sillä osumien määrä nousee. Algoritmi hyötyy välimuistista erityisesti silloin, kun samaan pelitilaan päädytään useita eri reittejä pitkin rekursiivisessa hakupuussa. Tämä on yleistä 2048-pelissä, etenkin hakusyvyyden noustessa.
 
 
 ## Puutteet ja parannusehdotukset
