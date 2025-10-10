@@ -16,6 +16,30 @@ Jokaisen siirron laskemiseen jokaisessa syvyydessä jouduaan laskemaan siirrot k
 
 Tilavaativuus ohjelmalle on $O(d)$ jossa $d$ on syvyys, sillä ohjelma tallentaa vain yhden polun kerrallaan. 
 
+## Suorituskyky
+
+Algoritmin suorituskykyä testattiin syvyydellä 4 (4 pelaajan siirtoa ja 3 tyhjän laatan simulointia per siirto) käyttäen seuraavaa testiruudukkoa:
+\
+[ 0, 0, 8, 0] 
+\
+[32, 16, 0, 0]
+\
+[6, 0, 2, 256]
+\
+[6, 256, 512, 0]
+\
+Testissä ajettiin 100 peliä eri cache-toteutuksilla mittaamaan välimuistin vaikutusta suorituskykyyn:
+
+| Cache-toteutus | Kokonaisaika | Keskiaika per siirto | Parannus |
+|---------------|--------------|----------------------|----------|
+| Ei cachea | 4128.3 s | 41.3 s | - |
+| Max-solmu cache | 595.8 s | 6.0 s | 85.6\% |
+| Chance-solmu cache | 615.9 s | 6.2 s | 85.1\% |
+| Molemmat cachet erikseen | 501.0 s | 5.0 s | 87.9\% |
+| Yhdistetty cache | 489.3 s | 4.9 s | 88.1\% |
+
+Tuloksista näkee että välimuistin käyttö on kriittistä ohjelman suoritusnopeudelle. Yhden thtenäisen välimuistin ylläpitäminen osottautui nopeimmaksi. Yhteisen välimuistin tunnuksen alussa on 0 tai 1 merkitsemään onko se max vai chance solmu. Tämä on melkein 8.4 kertaa nopeampi kuin ilman välimuistia. Välimuistin hyöty myös kasvaa syvyyden kasvaessa, sillä osumien määrä nousee. 
+
 
 ## Puutteet ja parannusehdotukset
 Ohjelman pystyis nopeuttamaan arvioimalla tyhjien laattojen vaikutusarvon ja ohittamalla ne laattat joissa tulevalla laatalla olisi pieni vaikutus. Tämä nopeuttaisi ohjelmaa etenkin alkuvaiheessa. 
