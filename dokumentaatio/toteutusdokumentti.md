@@ -12,7 +12,7 @@ Yhden siirron laskeminen vie pahimmassa tapauksessa $O((n*(2E))^d)$ jossa,
 - $E$ = Tyjät laatat $(0 \leq E \leq 15)$
 - $d$ = Syvyys - 1
 
-Jokaisen siirron laskemiseen jokaisessa syvyydessä jouduaan laskemaan siirrot kerrottuna tyhjillä ruuduilla mihin uusi laatta voi tulla. Nämä tyhjät ruudut on kerrottava kahdella kun mahdollisia laattoja on 2 ja 4. Koko kaava kasvaa potentiaalisesti syvyyden verran kun jokaiselle alkuperäiselle mahdollisuudelle lasketaan uudelleen kaikki mahdollisuudet. Pahimmissa tapauksessa aikavaativuus syvyydellä 4 on $O((4*30)⁴)$.
+Jokaisen siirron laskemiseen jokaisessa syvyydessä jouduaan laskemaan siirrot kerrottuna tyhjillä ruuduilla mihin uusi laatta voi tulla. Nämä tyhjät ruudut on kerrottava kahdella kun mahdollisia laattoja on 2 ja 4. Koko kaava kasvaa potentiaalisesti syvyyden verran kun jokaiselle alkuperäiselle mahdollisuudelle lasketaan uudelleen kaikki mahdollisuudet. Pahimmissa tapauksessa aikavaativuus syvyydellä 4 on $O((4*30)^4)$.
 
 Tilavaativuus ohjelmalle on $O(d)$ jossa $d$ on syvyys, sillä ohjelma tallentaa vain yhden polun kerrallaan. 
 
