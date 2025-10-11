@@ -1,6 +1,6 @@
 # 2048-Pelin algoritmi
 
-Tämä on 2048 Pelille expectimax algoritmi. Peli saavuttaa suurimman osan ajasta 4098 laatan, ja ratkaisee pelin eli saavuttaa 2048 aikalailla aina. 
+Tämä on 2048 Pelille expectimax algoritmi. Peli saavuttaa suurimman osan ajasta 4096 laatan, ja ratkaisee pelin eli saavuttaa 2048 aikalailla aina. 
 
 ## Dokumentaatio
 - [Määrittelydokumentti](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/maarittelydokumentti.md)
