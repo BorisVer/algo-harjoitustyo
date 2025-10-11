@@ -434,25 +434,3 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
                 new_board[n - len(new_tiles) + row][column] = value
 
         return new_board
-
-
-if __name__ == "__main__":
-    board = [
-        [0, 0, 8, 0],
-        [32, 16, 0, 0],
-        [6, 0, 2, 256],
-        [6, 256, 512, 0]
-    ]
-
-    e = Expectimax()
-
-    start = time.time()
-    count = 100
-    for i in range(count):
-        print(i)
-        e.get_best_move(board)
-    end = time.time()
-
-    runtime = end - start
-
-    print("The program ran a total of " + str(count) + " games with a total runtime of " + str(runtime) + "s meaning an average of " + str(runtime / 100) + "s per move")
