@@ -16,16 +16,16 @@ Tämä on 2048 Pelille expectimax algoritmi. Pelaamisen nopeutta ja laatua voi s
 - [Viikko 6](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti6.md)
 
 ## Asennus
-1. Asenna riippuvuudet
+1. Käynnistä poetry juurihakeimistossa
+
+   ```bash
+   poetry shell
+   ```
+
+2. Asenna riippuvuudet
 
    ```bash
    poetry install
-   ```
-
-2. Avaa peli
-
-   ```bash
-   poetry run invoke start
    ```
 
 ## Ohjelman suoritukset
