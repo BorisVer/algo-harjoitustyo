@@ -6,6 +6,25 @@ Ohjelma on rakennettu 2048 nimisen pelin ympärille. Peli koostuu 4x4 ruudukosta
 ## Ohjelman yleisrakenne
 2048-expectimax algortimin tavoite on pelata 2048 peliä mahdollisimman hyvin. Ohjelma simuloi kaikki pelaajan mahdolliset 4 suuntavalintaa. Sen jälkeen jokaiselle suunnalle ohjelma testaa jokaisen tyhjän laatan kohdalle luoda uusi laatta ja arvioi millainen pelitilanne saataisiin aikaa. Ohjelma tekee näin 4 pelaajan siirron verran, jonka jälkeen se vertaa kaikki mahdollisia lopputuloksia (joita on noin 100,000-2,000,000 riippuen tyhjien laattojen ja mahdollisten siirtosuuntien määrästä) ja valitsee niistä sen millä on suurin "pisteytys" pelilaudan arvolle. Pisteytys määrittyy useasta tekijästä: tyhjien laattojen määrästä, onko isoin laatta kulmassa, onko laudalla samankokoiset laatat lähekkäin, mahdolliset yhdistykset seuraavalla siirrolla sekä "S" muotoinen rata isoimmasta laatasta pienimpään. Kaikki nämä tekijät antavat arvon pelilaudalle, ja jokaisen siirron kohdalle myös tulee todennäköisyyslasku laattojen eri arvomahdollisuudelle (2 tai 4) jota huomioiden ohjelma kykenee laskemaan mikä siirto tuo parhaan tuloksen suurimmalla todennäköisyydellä. Ohjelma suorittaa algoritmin valitseman siirron ja sen jälkeen algoritmi lähtee uudelleen pyörimään laskemaan seuraavaa siirtoa. 
 
+## Ohjelman saavuttamat tulokset
+Algoritmillä suoritettiin 100 pelin simuointi seuraavilla muuttujilla:
+- MAX_DEPTH = 4
+- EMPTY_TILE = 16.0
+- CORNER_BONUS = 3.0
+- SNAKE_BONUS = 4.0
+- SMOOTHNESS_BONUS = 5.0
+- MERGE_BONUS = 5.5
+- CHANGE_DEPTH = True
+
+### Simulaation tulokset olivat seuraavanlaisia:
+- Parhaat pisteet:    129040
+- Huonoimmat pisteet:   11568
+- Suurimman laatan jakauma:
+  - **1024**: 11
+  - **2048**: 24
+  - **4096**: 58
+  - **8192**: 7
+
 ## Aika ja tilavaativuudet
 Yhden siirron laskeminen vie pahimmassa tapauksessa $O((n*(2E))^d)$ jossa,
 - $n$ = Mahdolliset siirrot solmussa $(n \leq 4)$
@@ -39,7 +58,6 @@ Testissä ajettiin 100 peliä eri cache-toteutuksilla mittaamaan välimuistin va
 | Yhdistetty cache | 489.3 s | 4.9 s | 88.1\% |
 
 Tuloksista näkee että välimuistin käyttö on kriittistä ohjelman suoritusnopeudelle. Yhden thtenäisen välimuistin ylläpitäminen osottautui nopeimmaksi. Yhteisen välimuistin tunnuksen alussa on 0 tai 1 merkitsemään onko se max vai chance solmu. Tämä on melkein **8.4** kertaa nopeampi kuin ilman välimuistia. Välimuistin hyöty myös kasvaa syvyyden kasvaessa, sillä osumien määrä nousee. Algoritmi hyötyy välimuistista erityisesti silloin, kun samaan pelitilaan päädytään useita eri reittejä pitkin rekursiivisessa hakupuussa. Tämä on yleistä 2048-pelissä, etenkin hakusyvyyden noustessa.
-
 
 ## Puutteet ja parannusehdotukset
 Ohjelman pystyis nopeuttamaan arvioimalla tyhjien laattojen vaikutusarvon ja ohittamalla ne laattat joissa tulevalla laatalla olisi pieni vaikutus. Tämä nopeuttaisi ohjelmaa etenkin alkuvaiheessa. 
