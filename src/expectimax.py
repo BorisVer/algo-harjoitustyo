@@ -1,5 +1,4 @@
 from game_config import GameConfig, ExpectimaxConfig  # pylint: disable=import-error
-import time
 
 class Expectimax: # pylint: disable=too-many-instance-attributes
     """
@@ -8,9 +7,6 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
     Attributes:
         max_depth (int): Maximum depth of the search tree
         tile_count (int): Number of rows and columns
-        max_cache (dict): Cache for the max() function, holds the game state as a tuple of tuples and then its value
-        chance_cache (dict): Cache for chance function, holds the game state as a tuple of tuples and then its value
-        eval_cache (dict): Cache for evaluation values, holds the game state as a tuple of tuples and then its value
     """
 
     def __init__(self): # pylint: disable=too-many-instance-attributes
@@ -20,9 +16,6 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
         Attributes:
             max_depth (int): Maximum depth of the search tree
             tile_count (int): Number of rows and columns
-            max_cache (dict): Cache for the max() function, holds the game state as a tuple of tuples and then its value
-            chance_cache (dict): Cache for chance function, holds the game state as a tuple of tuples and then its value
-            eval_cache (dict): Cache for evaluation values, holds the game state as a tuple of tuples and then its value
         """
         self.max_depth = ExpectimaxConfig.MAX_DEPTH
         self.tile_count = GameConfig.TILE_COUNT
@@ -48,14 +41,13 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
         self.max_depth = ExpectimaxConfig.MAX_DEPTH
 
         empty = sum(row.count(0) for row in board)
-        largest = max(max(row) for row in board)
 
         self.cache.clear()
 
         if ExpectimaxConfig.CHANGE_DEPTH:
-            if empty <= 4 and largest >= 2048:
+            if empty <= 4:
                 self.max_depth = self.max_depth + 1
-            elif empty >= 7 and largest < 2048:
+            elif empty >= 7:
                 self.max_depth = self.max_depth - 1
 
         _, move = self.max(board, 0)
@@ -156,9 +148,6 @@ class Expectimax: # pylint: disable=too-many-instance-attributes
                     potentials += value.bit_length() - 1  # To get the log2
                 if column + 1 < n and board[row][column + 1] == value:
                     potentials += value.bit_length() - 1  # To get the log2
-
-        if pairs == 0:
-            return 0.0, potentials / 2 * n * (n - 1)
 
         return - (difference/pairs), potentials / (2 * n * (n - 1))
 
