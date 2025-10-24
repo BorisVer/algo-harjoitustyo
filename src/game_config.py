@@ -60,7 +60,7 @@ class ExpectimaxConfig:
         CHANGE_DEPTH: Changing depth of the search tree based on the game state, thinks less in earlygame to speedup
     """
 
-    MAX_DEPTH = 4
+    MAX_DEPTH = 3
     CHANGE_DEPTH = True
 
     EMPTY_TILE = 16.0
