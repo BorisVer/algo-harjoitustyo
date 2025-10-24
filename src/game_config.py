@@ -59,10 +59,12 @@ class ExpectimaxConfig:
         MERGE_BONUS: Bonus for potential merges
         CHANGE_DEPTH: Changing depth of the search tree based on the game state, thinks less in earlygame to speedup
     """
-    MAX_DEPTH = 3
+
+    MAX_DEPTH = 4
+    CHANGE_DEPTH = True
+
     EMPTY_TILE = 16.0
     CORNER_BONUS = 3.0
     SNAKE_BONUS = 4.0
     SMOOTHNESS_BONUS = 5.0
     MERGE_BONUS = 5.5
-    CHANGE_DEPTH = True

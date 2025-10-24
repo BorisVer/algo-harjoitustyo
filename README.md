@@ -1,6 +1,6 @@
 # 2048-Pelin algoritmi
 
-Tämä on 2048 Pelille expectimax algoritmi. Peli saavuttaa suurimman osan ajasta 4096 laatan, ja ratkaisee pelin eli saavuttaa 2048 aikalailla aina. 
+Tämä on 2048 Pelille expectimax algoritmi. Pelaamisen nopeutta ja laatua voi säätää game_config.py tiedoston luokan ExpectimaxConfig alla olevasta MAX_DEPTH ja CHANGE_DEPTH. MAX_DEPTH määrittelee pelaajan siirtojen määrän mitä ohjelma katsoo eteenpäin ja CHANGE_DEPTH muuttaa ohjelman syvyyttä dynaamisesti riippuen pelitilanteesta.  
 
 ## Dokumentaatio
 - [Määrittelydokumentti](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/maarittelydokumentti.md)
@@ -13,18 +13,19 @@ Tämä on 2048 Pelille expectimax algoritmi. Peli saavuttaa suurimman osan ajast
 - [Viikko 3](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti3.md)
 - [Viikko 4](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti4.md)
 - [Viikko 5](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti5.md)
+- [Viikko 6](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti6.md)
 
 ## Asennus
-1. Asenna riippuvuudet
+1. Käynnistä poetry juurihakeimistossa
+
+   ```bash
+   poetry shell
+   ```
+
+2. Asenna riippuvuudet
 
    ```bash
    poetry install
-   ```
-
-2. Avaa peli
-
-   ```bash
-   poetry run invoke start
    ```
 
 ## Ohjelman suoritukset
