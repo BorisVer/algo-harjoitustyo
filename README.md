@@ -15,7 +15,7 @@ Tämä on 2048 Pelille expectimax algoritmi. Pelaamisen nopeutta ja laatua voi s
 - [Viikko 5](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti5.md)
 - [Viikko 6](https://github.com/BorisVer/algo-harjoitustyo/blob/main/dokumentaatio/viikkoraportit/viikkoraportti6.md)
 
-## Asennus
+## Käyttöohje
 1. Käynnistä poetry juurihakeimistossa
 
    ```bash
